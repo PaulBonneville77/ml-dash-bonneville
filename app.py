@@ -1,11 +1,44 @@
-from flask import Flask
+from flask import Flask, request, jsonify, abort
+import joblib
 
 app = Flask(__name__)
 
+def load_model():
+    return joblib.load('regression.joblib')
+
+def get_prediction(_taille, _nb_rooms, _garden):   
+   model = load_model()
+
+   if _taille <= 0:
+      return abort(400, description="mettre une taille positive")
+   if _nb_rooms < 0:
+      return abort(400, description='mettre nombre de chambre correct')
+   if _garden == 0 or _garden == 1:
+      return abort(400, description="_garden est un boolean")
+
+   if _taille > 0 and _nb_rooms > 0:      
+      X = [[_taille, _nb_rooms, _garden]]
+      prediction = model.predict(X)
+
+   return prediction
+
+
 @app.route("/")
-def hello_world():
-   return "<p>Hello, World!</p>"
+def main_page():
+   return "<h1>This is the main page</h1>"
+
+@app.route("/prediction", methods=['POST'])
+def predict():
+
+   data = request.get_json(force=True)
+
+   _taille = data['_taille']
+   _nb_rooms = data['_nb_rooms']
+   _garden = data['_garden']
+
+   prediction = get_prediction(_taille, _nb_rooms, _garden)
+
+   return jsonify(prediction[0])
 
 if __name__== "__main__":
-
    app.run('0.0.0.0')
