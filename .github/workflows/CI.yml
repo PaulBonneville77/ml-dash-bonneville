@@ -17,4 +17,11 @@ jobs:
       - name: Run tests
         run : |
           pip install pytest
+          run apt-get update -y
+          run apt-get install python3 -y
+          run apt-get install python3-pip -y
+          run pip install joblib
+          run pip install -U pytest
+          run pip install flask
+          run pip install -U scikit-learn
           pytest
