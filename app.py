@@ -9,13 +9,6 @@ def load_model():
 def get_prediction(_taille, _nb_rooms, _garden):   
    model = load_model()
 
-   if _taille <= 0:
-      return abort(400, description="mettre une taille positive")
-   if _nb_rooms < 0:
-      return abort(400, description='mettre nombre de chambre correct')
-   if _garden == 0 or _garden == 1:
-      return abort(400, description="_garden est un boolean")
-
    if _taille > 0 and _nb_rooms > 0:      
       X = [[_taille, _nb_rooms, _garden]]
       prediction = model.predict(X)
@@ -36,9 +29,18 @@ def predict():
    _nb_rooms = data['_nb_rooms']
    _garden = data['_garden']
 
-   prediction = get_prediction(_taille, _nb_rooms, _garden)
+   if _taille <= 0:
+      return abort(400, description="mettre une taille positive")
+   if _nb_rooms < 0:
+      return abort(400, description='mettre nombre de chambre positif')
+   if (_garden != 0) and (_garden != 1):
+      return abort(400, description="_garden doit être un boolean")
 
-   return jsonify(prediction[0])
+   prediction = get_prediction(_taille, _nb_rooms, _garden)
+   
+   value = '{"prediction":'+str(prediction[0])+'}'
+
+   return jsonify(value)
 
 if __name__== "__main__":
    app.run('0.0.0.0')

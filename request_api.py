@@ -1,5 +1,8 @@
 import requests
 
-x = requests.post('http://localhost:5000/prediction', json={'_taille':150,'_nb_rooms':4,'_garden':0})
+Y = requests.post('http://localhost:5000/prediction', json={'_taille':200,'_nb_rooms':6,'_garden':1})
 
-print(x.text)
+if Y.status_code == 200:
+    print(Y.json())
+else:
+    print(Y.text)
