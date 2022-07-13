@@ -15,7 +15,7 @@ jobs:
         run : 
           docker run -p 5000:5000 -d paulbonneville4/api-mldash:test 
       - name: Run tests
-        run : |
+        run :
           pip install pytest
           run apt-get update -y
           run apt-get install python3 -y
