@@ -14,11 +14,13 @@ jobs:
       - name: run docker image
         run : 
           docker run -p 5000:5000 -d paulbonneville4/api-mldash:test 
-      - name: Run tests
+      - name: install
         run :
           pip install pytest
           pip install joblib
           pip install -U pytest
           pip install flask
           pip install -U scikit-learn
+      - name: Run tests
+        run :
           pytest
