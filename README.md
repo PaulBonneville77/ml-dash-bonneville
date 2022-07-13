@@ -1,8 +1,10 @@
 ## API mldash
+# mldash-bonneville
+by Paul Bonneville
+
 # Git 
 https://github.com/PaulBonneville77/ml-dash-bonneville.git
 
-# ml-dash-bonneville
 
 # Build image 
 docker build -t api-mldash .
