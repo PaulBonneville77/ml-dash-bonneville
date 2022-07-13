@@ -18,7 +18,7 @@ def get_prediction(_taille, _nb_rooms, _garden):
 
 @app.route("/")
 def main_page():
-   return "<h1>This is the main page</h1>"
+   return "<h1>Documentation</h1>"
 
 @app.route("/prediction", methods=['POST'])
 def predict():
@@ -38,7 +38,7 @@ def predict():
 
    prediction = get_prediction(_taille, _nb_rooms, _garden)
    
-   value = '{"prediction":'+str(prediction[0])+'}'
+   value = '{"prediction":'+str(round(prediction[0]))+'}'
 
    return jsonify(value)
 
